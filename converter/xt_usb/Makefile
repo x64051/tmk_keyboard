@@ -17,7 +17,7 @@ SRC =	matrix.c \
 ifdef KEYMAP
     SRC := keymap_$(KEYMAP).c $(SRC)
 else
-    SRC := keymap_plain.c $(SRC)
+    SRC := keymap_x64051.c $(SRC)
 endif
 
 CONFIG_H = config.h
@@ -82,6 +82,7 @@ EXTRAKEY_ENABLE = yes	# Audio control and System control(+450)
 CONSOLE_ENABLE = yes	# Console for debug(+400)
 COMMAND_ENABLE = yes    # Commands for debug and configuration
 NKRO_ENABLE = yes	# USB Nkey Rollover
+FADE_KEY_LED_ENABLE = no
 
 
 # XT/2 Options

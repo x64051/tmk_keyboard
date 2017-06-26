@@ -43,6 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef ADB_MOUSE_ENABLE
 #include "adb.h"
 #endif
+#ifdef FADE_KEY_LED_ENABLE
+#include "fade.h"
+#endif
 
 
 #ifdef MATRIX_HAS_GHOST
@@ -90,6 +93,11 @@ void keyboard_init(void)
 #ifdef BACKLIGHT_ENABLE
     backlight_init();
 #endif
+
+#ifdef FADE_KEY_LED_ENABLE
+    fade_led_init();
+#endif
+
 }
 
 /*
@@ -106,9 +114,19 @@ void keyboard_task(void)
     matrix_row_t matrix_row = 0;
     matrix_row_t matrix_change = 0;
 
+#ifdef FADE_KEY_LED_ENABLE
+    fade_led_key_pressed = 0;
+#endif
+
     matrix_scan();
     for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
         matrix_row = matrix_get_row(r);
+
+#ifdef FADE_KEY_LED_ENABLE
+        if(matrix_row != 0)
+            fade_led_key_pressed = 1;
+#endif
+
         matrix_change = matrix_row ^ matrix_prev[r];
         if (matrix_change) {
 #ifdef MATRIX_HAS_GHOST
@@ -137,10 +155,8 @@ void keyboard_task(void)
                     hook_matrix_change(e);
                     // record a processed key
                     matrix_prev[r] ^= ((matrix_row_t)1<<c);
-
-                    // This can miss stroke when scan matrix takes long like Topre
                     // process a key per task call
-                    //goto MATRIX_LOOP_END;
+                    goto MATRIX_LOOP_END;
                 }
             }
         }
@@ -175,6 +191,7 @@ MATRIX_LOOP_END:
         if (debug_keyboard) dprintf("LED: %02X\n", led_status);
         hook_keyboard_leds_change(led_status);
     }
+
 }
 
 void keyboard_set_leds(uint8_t leds)

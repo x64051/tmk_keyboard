@@ -63,6 +63,11 @@ ifeq (yes,$(strip $(NKRO_ENABLE)))
     OPT_DEFS += -DNKRO_ENABLE
 endif
 
+ifeq (yes,$(strip $(FADE_KEY_LED_ENABLE)))
+    SRC += $(COMMON_DIR)/fade.c
+    OPT_DEFS += -DFADE_KEY_LED_ENABLE
+endif
+
 ifeq (yes,$(strip $(USB_6KRO_ENABLE)))
     OPT_DEFS += -DUSB_6KRO_ENABLE
 endif
