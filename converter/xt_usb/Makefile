@@ -82,7 +82,7 @@ EXTRAKEY_ENABLE = yes	# Audio control and System control(+450)
 CONSOLE_ENABLE = yes	# Console for debug(+400)
 COMMAND_ENABLE = yes    # Commands for debug and configuration
 NKRO_ENABLE = yes	# USB Nkey Rollover
-FADE_KEY_LED_ENABLE = no
+FADE_KEY_LED_ENABLE = yes
 
 
 # XT/2 Options

@@ -48,7 +48,7 @@ const uint16_t pwmtable[PWM_TABLE_SIZE] PROGMEM = {
     28160,29440,30976,32512,34048,35840,37632,39424,
     41472,43520,45824,48128,50432,52992,55552,58368,
 
-    61440,64512,65535,65535,65535,65535,65535,65535,
+    61440,64512,65535,65535,65535,65535,65535,30976,
 
 };
 
@@ -69,7 +69,7 @@ void fade_led_init(void)
     /* TCCR1A = 1 << COM1A1 | 1 << WGM01 | 1 << WGM00 | 1 << WGM02; */
     TCCR1B = 1 << CS00;
     OCR1A = 0;
-    /* OCR1A = PWM_MAX; // INIT cyce */
+    /* OCR1A = PWM_MAX; // INIT cycle */
 
     // init timer 3
   
@@ -92,7 +92,8 @@ ISR(TIMER3_OVF_vect)
             OCR1A = pgm_read_word(pwmtable + pwm_phase);
             /* uint16_t tmp = pgm_read_word(pwmtable + pwm_phase); */
             /* OCR1AL = tmp & 0x00ff; OCR1AH = tmp >> 8; */
-            pwm_phase++;
+            if(pwm_phase < PWM_TABLE_SIZE - 1)
+                pwm_phase++;
         }else{
             d++;
         }
