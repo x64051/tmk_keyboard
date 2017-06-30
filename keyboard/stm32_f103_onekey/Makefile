@@ -20,14 +20,14 @@ endif
 CONFIG_H = config.h
 
 # GENERIC STM32F103C8T6 board - stm32duino bootloader
-OPT_DEFS = -DCORTEX_VTOR_INIT=0x2000
-MCU_LDSCRIPT = STM32F103x8_stm32duino_bootloader
-BOARD = GENERIC_STM32_F103
+# OPT_DEFS = -DCORTEX_VTOR_INIT=0x2000
+# MCU_LDSCRIPT = STM32F103x8_stm32duino_bootloader
+# BOARD = GENERIC_STM32_F103
 
 # GENERIC STM32F103C8T6 board - no bootloader (programmer over serial or SWD)
-# OPT_DEFS =
-# MCU_LDSCRIPT = STM32F103x8
-# BOARD = GENERIC_STM32_F103
+OPT_DEFS =
+MCU_LDSCRIPT = STM32F103x8
+BOARD = GENERIC_STM32_F103
 
 # MAPLE MINI
 # OPT_DEFS = -DCORTEX_VTOR_INIT=0x5000
@@ -70,10 +70,15 @@ ARMV = 7
 ## BOOTMAGIC is not supported on STM32 chips yet.
 MOUSEKEY_ENABLE = yes	# Mouse keys
 EXTRAKEY_ENABLE = yes	# Audio control and System control
-# CONSOLE_ENABLE = yes	# Console for debug
+CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
 SLEEP_LED_ENABLE = no   # Breathing sleep LED during USB suspend
 NKRO_ENABLE = yes	    # USB Nkey Rollover
 
 include $(TMK_DIR)/tool/chibios/common.mk
 include $(TMK_DIR)/tool/chibios/chibios.mk
+
+
+s_flash: 
+	sh Arduino_STM32/tools/linux64/serial_upload ttyUSB0 2 067b:2303 build/ch.bin
+

@@ -33,7 +33,7 @@ CONFIG_H ?= config.h
 
 
 # MCU name
-MCU ?= atmega32u2
+MCU ?= atmega32u4
 
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the
@@ -102,6 +102,7 @@ NKRO_ENABLE ?= yes	# USB Nkey Rollover
 PS2_USE_INT ?= yes	# uses external interrupt for falling edge of PS/2 clock pin
 #PS2_USE_BUSYWAIT ?= yes	# uses primitive reference code
 
+FADE_KEY_LED_ENABLE = yes
 
 # Optimize size but this may cause error "relocation truncated to fit"
 #EXTRALDFLAGS = -Wl,--relax
