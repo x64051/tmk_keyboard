@@ -8,8 +8,6 @@
 
 // TODO move to fade.h
 // FIXME make timer, pins variable
-#define PWM_TABLE_SIZE (232 - 8)
-/* #define PWM_MAX 65535 */
 
 volatile bool fade_led_key_pressed = 0;
 
@@ -24,7 +22,7 @@ void fade_led_init(void)
     DDRB = 1 << PB5;
     TCCR1A = 1 << COM1A1 | 1 << WGM00 | 1 << WGM02;
     TCCR1B = 1 << WGM02 | 1 << CS00;
-    OCR1A = 0x00;
+    OCR1A = 0xFF;
 
 
     // init timer 3
@@ -40,9 +38,9 @@ void fade_led_init(void)
 ISR(TIMER3_OVF_vect)
 {
     if(fade_led_key_pressed)
-        OCR1A = 0x00;
-    else if(OCR1A < 255)
-        OCR1A++;
+        OCR1A = 0xFF;
+    else if(OCR1A > 0x00)
+        OCR1A--;
 }
 
 
