@@ -115,7 +115,7 @@ void keyboard_task(void)
     matrix_row_t matrix_change = 0;
 
 #ifdef FADE_KEY_LED_ENABLE
-    fade_led_key_pressed = 0;
+    fade_led_key_pressed = VALUE_PHASE_0();
 #endif
 
     matrix_scan();

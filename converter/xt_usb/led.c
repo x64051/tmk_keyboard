@@ -23,27 +23,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define NUM_LED_DDR  DDRB
-#define NUM_LED_PIN  PB5
+#define NUM_LED_PIN  PB0
 #define NUM_LED_PORT PORTB
 
 
 void led_set(uint8_t usb_led) {
 
     CAPS_LED_DDR |= (1<<CAPS_LED_PIN);
-#ifndef FADE_KEY_LED_ENABLE
     NUM_LED_DDR  |= (1<<NUM_LED_PIN);
-#endif
 
     if (usb_led & (1<<USB_LED_CAPS_LOCK)) // output high TODO init only once
         CAPS_LED_PORT &= ~(1<<CAPS_LED_PIN);
     else 
         CAPS_LED_PORT |= (1<<CAPS_LED_PIN);
 
-#ifndef FADE_KEY_LED_ENABLE
     if (usb_led & (1<<USB_LED_NUM_LOCK))
         NUM_LED_PORT &= ~(1<<NUM_LED_PIN);
     else
         NUM_LED_PORT |= (1<<NUM_LED_PIN);
-#endif
 
 }

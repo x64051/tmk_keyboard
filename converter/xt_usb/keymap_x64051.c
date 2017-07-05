@@ -1,12 +1,12 @@
 #include "action_code.h"
 #include "action_macro.h"
 #include "action_util.h"
+#include "action_layer.h"
 #include "progmem.h"
 #include "keymap_common.h" 
 #include <avr/wdt.h>
 
-#define MOUEKEY_MAX_SPEED 20
-
+// TODO volatile extern bool fade_invert;
 
 // Die verschiedenen Layer. TRNS: transparent, mache das, was auf dem unteren Layer ist
 // TODO bootmagic:
@@ -80,6 +80,7 @@ enum function_actions {
     FUNCTION_RSHIFT_RPAREN, // )
     FUNCTION_REBOOT, // pro micro rebooten
     FUNCTION_BOOTLOADER_JMP, // erklärt sich von selbst
+    FUNCTION_LAYER_1_2_TOGGLE, // erklärt sich von selbst
 };
 
 /* const PROGMEM uint16_t fn_actions[] = { */
@@ -90,6 +91,7 @@ const action_t PROGMEM fn_actions[] = {
     /* FN3 */ ACTION_FUNCTION_TAP(FUNCTION_LSHIFT_LPAREN),
     /* FN4 */ ACTION_FUNCTION_TAP(FUNCTION_RSHIFT_RPAREN),
     /* FN5 */ ACTION_LAYER_TOGGLE(1),
+    /* /1* FN5 *1/ TODO ACTION_FUNCTION(FUNCTION_LAYER_1_2_TOGGLE), */
 
     /* FN6 */ ACTION_FUNCTION_TAP(FUNCTION_BOOTLOADER_JMP),
     /* FN7 */ ACTION_FUNCTION_TAP(FUNCTION_REBOOT),
@@ -183,7 +185,17 @@ void action_function(keyrecord_t *event, uint8_t id, uint8_t opt){
             }
 
             break;
-
+            /* TODO
+        case FUNCTION_LAYER_1_2_TOGGLE:
+            {
+                action_t action = ACTION_LAYER_TOGGLE(1);
+            }
+            layer_state ^= (1<<1); 
+            send_keyboard_report();
+            fade_invert = layer_state & (1<<1);
+            if(layer_state & (1 << 2))
+            break;
+            */
     }
 
 
